@@ -45,71 +45,98 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
+        <AuthLayout 
+            title="Bienvenido al Amankay" 
+            description="Ingrese a su cuenta para disfrutar de nuestros servicios exclusivos"
+            backgroundImage="img/room2.jpg" // Añadir imagen de fondo del hotel
+        >
+            <Head title="Acceso - Hotel Amankay" />
 
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">correo electronico</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
+            <div className="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-xl border border-gray-200 max-w-md w-full">
+                {status && (
+                    <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg text-center">
+                        {status}
                     </div>
+                )}
 
-                    <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">contraseña</Label>
-                            {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    olvidaste tu contraseña?
-                                </TextLink>
-                            )}
+                <h2 className="text-3xl font-serif font-bold text-amber-800 mb-2 text-center">Te da la bienvenida Amakay</h2>
+                <p className="text-gray-600 mb-8 text-center">Por favor ingrese sus credenciales</p>
+
+                <form className="flex flex-col gap-4" onSubmit={submit}>
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="email" className="text-gray-700 font-medium">Correo electrónico</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                required
+                                autoFocus
+                                tabIndex={1}
+                                autoComplete="email"
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                placeholder="ejemplo@dominio.com"
+                                className="border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                            />
+                            <InputError message={errors.email} />
                         </div>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Contraseña"
-                        />
-                        <InputError message={errors.password} />
+
+                        <div className="space-y-2">
+                            <div className="flex items-center">
+                                <Label htmlFor="password" className="text-gray-700 font-medium">Contraseña</Label>
+                                {canResetPassword && (
+                                    <TextLink 
+                                        href={route('password.request')} 
+                                        className="ml-auto text-sm text-amber-700 hover:text-amber-800" 
+                                        tabIndex={5}
+                                    >
+                                        ¿Olvidó su contraseña?
+                                    </TextLink>
+                                )}
+                            </div>
+                            <Input
+                                id="password"
+                                type="password"
+                                required
+                                tabIndex={2}
+                                autoComplete="current-password"
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                placeholder="••••••••"
+                                className="border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                            />
+                            <InputError message={errors.password} />
+                        </div>
+
+                        <div className="flex items-center space-x-3">
+                            <Checkbox
+                                id="remember"
+                                name="remember"
+                                checked={data.remember}
+                                onClick={() => setData('remember', !data.remember)}
+                                tabIndex={3}
+                                className="border-gray-300 text-amber-600 focus:ring-amber-500"
+                            />
+                            <Label htmlFor="remember" className="text-gray-700">Recordar mis datos</Label>
+                        </div>
+
+                        <Button 
+                            type="submit" 
+                            className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg transition-colors duration-300" 
+                            tabIndex={4} 
+                            disabled={processing}
+                        >
+                            {processing && <LoaderCircle className="h-4 w-4 animate-spin mr-2" />}
+                            Ingresar
+                        </Button>
                     </div>
 
-                    <div className="flex items-center space-x-3">
-                        <Checkbox
-                            id="remember"
-                            name="remember"
-                            checked={data.remember}
-                            onClick={() => setData('remember', !data.remember)}
-                            tabIndex={3}
-                        />
-                        <Label htmlFor="remember">Recuerdame</Label>
-                    </div>
-
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Ingresar
-                    </Button>
-
-                    <div className="relative">
+                    <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
-                            <Separator className="w-full" />
+                            <Separator className="w-full border-t border-gray-300" />
                         </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-background px-2 text-muted-foreground">
+                        <div className="relative flex justify-center">
+                            <span className="bg-white px-3 text-sm text-gray-500">
                                 O continuar con
                             </span>
                         </div>
@@ -120,7 +147,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             variant="outline"
                             type="button"
                             onClick={handleGoogleLogin}
-                            className="w-full"
+                            className="w-full border-gray-300 hover:bg-gray-50"
                             tabIndex={5}
                         >
                             <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
@@ -132,7 +159,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             variant="outline"
                             type="button"
                             onClick={handleFacebookLogin}
-                            className="w-full"
+                            className="w-full border-gray-300 hover:bg-gray-50"
                             tabIndex={6}
                         >
                             <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -141,15 +168,19 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             Facebook
                         </Button>
                     </div>
-                </div>
+                </form>
 
-                <div className="text-muted-foreground text-center text-sm">
-                    No tienes cuenta?{' '}
-                    <TextLink href={route('register')} tabIndex={7}>
-                        Registrate
+                <div className="mt-8 text-center text-sm text-gray-600">
+                    ¿No tiene una cuenta?{' '}
+                    <TextLink 
+                        href={route('register')} 
+                        className="text-amber-700 hover:text-amber-800 font-medium" 
+                        tabIndex={7}
+                    >
+                        Regístrese aquí
                     </TextLink>
                 </div>
-            </form>
+            </div>
         </AuthLayout>
     );
 }
