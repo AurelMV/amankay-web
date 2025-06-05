@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Habitacion extends Model
 {
-      protected $table = 'habitacions';
+    protected $table = 'habitacions';
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -22,4 +22,8 @@ class Habitacion extends Model
     {
         return $this->imagen ? asset($this->imagen) : '';
     }
+    public function reservas()
+{
+    return $this->hasMany(Reserva::class, 'id_habitacion');
+}
 }

@@ -75,7 +75,7 @@ public function RecursoCatalogo()
 
         $data = $habitaciones->map(function ($hab) {
             return [
-                'id' => $hab->id_habitacion,
+                'id' => $hab->id,
                 'numero' => $hab->numero,
                 'tipo' => $hab->tipo,
                 'precio' => $hab->precio_noche,

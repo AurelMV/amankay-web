@@ -21,6 +21,12 @@ const Header = () => {
               {item.label}
             </a>
           ))}
+          <a
+            href="/login"
+            className="ml-4 px-4 py-2 rounded-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold shadow transition duration-300"
+          >
+            Inicio Sesión
+          </a>
         </nav>
       </div>
     </header>
