@@ -25,13 +25,12 @@ Route::middleware(['auth', 'verified', 'role:admin|cliente'])->group(function ()
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    // Crear habitaciones
-    Route::post('/habitaciones', [HabitacionController::class, 'store']);
-
     // Rutas para reservas (desde React)
     Route::get('/reservas', [ReservaController::class, 'index']);
     Route::post('/reservas', [ReservaController::class, 'store']);
     Route::get('/reservas/{id}', [ReservaController::class, 'show']);
+    Route::post('/habitaciones', [HabitacionController::class, 'store']);
+    Route::get('/habitaciones/catalogo', [HabitacionController::class, 'RecursoCatalogo']);
 });
 
 Route::post('/reservas', [ReservaController::class, 'store']);
@@ -43,6 +42,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('admin/dashboard', function () {
         return Inertia::render('admin/dashboard-admin');
     })->name('admin.dashboard');
+    Route::get('admin/usuarios', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
 });
 
 // Otros archivos de rutas
