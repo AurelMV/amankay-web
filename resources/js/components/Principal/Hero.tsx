@@ -11,7 +11,7 @@ const Hero = () => {
           Bienvenidos a <span className="text-yellow-400">Amankay Inn</span>
         </h2>
         <p className="text-2xl md:text-3xl text-gray-200 mb-8 animate-fade-in delay-200">
-          Tu descanso perfecto en <span className="font-semibold text-yellow-300">Puno</span>
+          Tu descanso perfecto en <span className="font-semibold text-yellow-300">Cusco</span>
         </p>
         <a
           href="#rooms"
