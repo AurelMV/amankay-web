@@ -69,25 +69,25 @@ const Rooms: React.FC = () => {
 
   return (
     <section className="p-8 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center mb-6">Nuestras Habitaciones</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 text-black">Nuestras Habitaciones</h2>
 
       <div className="flex gap-4 justify-center mb-8">
         <div>
-          <label className="block text-sm font-semibold">Fecha inicio</label>
+          <label className="block text-sm font-semibold text-black">Fecha inicio</label>
           <input
             type="date"
             value={fechaInicio}
             onChange={(e) => setFechaInicio(e.target.value)}
-            className="border rounded px-2 py-1"
+            className="border rounded px-2 py-1 text-black"
           />
         </div>
         <div>
-          <label className="block text-sm font-semibold">Fecha fin</label>
+          <label className="block text-sm font-semibold text-black">Fecha fin</label>
           <input
             type="date"
             value={fechaFin}
             onChange={(e) => setFechaFin(e.target.value)}
-            className="border rounded px-2 py-1"
+            className="border rounded px-2 py-1 text-black"
           />
         </div>
       </div>
