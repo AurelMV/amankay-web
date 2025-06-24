@@ -1,5 +1,4 @@
-import React from 'react';   
-import Head from '@inertiajs/react'; // or the correct path to Head component
+import { Head } from '@inertiajs/react'; // or the correct path to Head component
 
 const Reservar = () => {
   const handleReserva = async () => {
