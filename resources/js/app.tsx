@@ -6,13 +6,12 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Welcome from './pages/welcome';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 interface InertiaAppProps {
     el: HTMLElement;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     App: React.ComponentType<any>;
     props: Record<string, unknown>;
 }

@@ -27,15 +27,9 @@ Route::middleware(['auth', 'verified', 'role:admin|cliente'])->group(function ()
 
     // Rutas para reservas (desde React)
     Route::get('/reservas', [ReservaController::class, 'index']);
-    Route::post('/reservas', [ReservaController::class, 'store']);
-    Route::get('/reservas/{id}', [ReservaController::class, 'show']);
-    Route::post('/habitaciones', [HabitacionController::class, 'store']);
-    Route::get('/habitaciones/catalogo', [HabitacionController::class, 'RecursoCatalogo']);
-    Route::post('/reservas', [ReservaController::class, 'store']);
     Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
+    Route::get('/reservas/{id}', [ReservaController::class, 'show']);
 });
-
-
 
 // Rutas solo para administrador
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
@@ -45,10 +39,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('admin/reservas', [ReservaController::class, 'index'])->name('admin.reservas');
     Route::get('admin/usuarios', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
     Route::get('admin/habitaciones', [\App\Http\Controllers\HabitacionController::class, 'index'])->name('admin.habitaciones');
-    Route::post('/habitaciones', [HabitacionController::class, 'store']);
-    Route::get('/habitaciones/catalogo', [HabitacionController::class, 'RecursoCatalogo']);
-    Route::get('/habitaciones/{id}', [HabitacionController::class, 'show']);
 
+    // CRUD de habitaciones para admin
+    Route::post('/habitaciones', [HabitacionController::class, 'store']);
+    Route::get('/habitaciones/{id}', [HabitacionController::class, 'show']);
     Route::put('/habitaciones/{id}', [HabitacionController::class, 'update']);
     Route::delete('/habitaciones/{id}', [HabitacionController::class, 'destroy']);
 });

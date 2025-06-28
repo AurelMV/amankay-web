@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { usePage } from '@inertiajs/react';
 
 interface Habitacion {
     id: number;
@@ -10,10 +11,23 @@ interface Habitacion {
     imagen_url: string | null;
 }
 
+interface PageProps {
+  auth: {
+    user: {
+      id: number;
+      name: string;
+      email: string;
+      roles?: string[];
+    } | null;
+  };
+  [key: string]: unknown;
+}
+
 const Rooms: React.FC = () => {
-    const [habitaciones, setHabitaciones] = useState<Habitacion[]>([]);
-    const [fechaInicio, setFechaInicio] = useState<string>('');
-    const [fechaFin, setFechaFin] = useState<string>('');
+  const { auth } = usePage<PageProps>().props;
+  const [habitaciones, setHabitaciones] = useState<Habitacion[]>([]);
+  const [fechaInicio, setFechaInicio] = useState<string>('');
+  const [fechaFin, setFechaFin] = useState<string>('');
 
     useEffect(() => {
         fetchHabitaciones();
@@ -29,28 +43,34 @@ const Rooms: React.FC = () => {
             });
     };
 
-    const handleReserva = async (habitacionId: number) => {
-        if (!fechaInicio || !fechaFin) {
-            alert('Por favor selecciona fechas de inicio y fin.');
-            return;
-        }
+  const handleReserva = async (habitacionId: number) => {
+    // Verificar si el usuario está autenticado
+    if (!auth.user) {
+      alert('Debes iniciar sesión para realizar una reserva.');
+      return;
+    }
+
+    if (!fechaInicio || !fechaFin) {
+      alert('Por favor selecciona fechas de inicio y fin.');
+      return;
+    }
 
         const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '';
 
-        try {
-            const response = await fetch('/reservas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                },
-                body: JSON.stringify({
-                    user_id: 1, // ✅ importante: usa el nombre correcto que espera Laravel
-                    habitacion_id: habitacionId,
-                    fecha_inicio: fechaInicio,
-                    fecha_fin: fechaFin,
-                }),
-            });
+    try {
+      const response = await fetch('/reservas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken,
+        },
+        body: JSON.stringify({
+          user_id: auth.user.id, // ✅ Usar el ID del usuario autenticado
+          habitacion_id: habitacionId,
+          fecha_inicio: fechaInicio,
+          fecha_fin: fechaFin,
+        }),
+      });
 
             const result = await response.json();
 

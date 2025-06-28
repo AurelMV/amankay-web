@@ -11,11 +11,11 @@ interface FormData {
 }
 
 interface ApiResponse {
-    success: boolean;
-    message?: string;
-    data?: any;
-    errors?: Record<string, string[]>;
-    error?: string;
+  success: boolean;
+  message?: string;
+  data?: Record<string, unknown>;
+  errors?: Record<string, string[]>;
+  error?: string;
 }
 
 const HabitacionForm: React.FC = () => {

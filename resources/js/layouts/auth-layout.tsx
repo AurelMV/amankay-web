@@ -10,7 +10,6 @@ interface AuthLayoutProps {
 
 export default function AuthLayout({ 
   title, 
-  description, 
   children,
   backgroundImage = '/images/default-background.jpg' // Valor por defecto
 }: AuthLayoutProps) {
