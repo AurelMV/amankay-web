@@ -59,7 +59,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     </div>
                 )}
 
-                <h2 className="text-3xl font-serif font-bold text-amber-800 mb-2 text-center">Te da la bienvenida Amakay</h2>
+                <h2 className="text-3xl font-serif font-bold text-amber-800 mb-2 text-center">Te da la bienvenida Amankay</h2>
                 <p className="text-gray-600 mb-8 text-center">Por favor ingrese sus credenciales</p>
 
                 <form className="flex flex-col gap-4" onSubmit={submit}>

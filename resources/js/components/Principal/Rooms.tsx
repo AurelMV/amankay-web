@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { usePage } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 
 interface Habitacion {
     id: number;
     numero: string;
     tipo: string;
-    precio: number;
+    precio_noche: number;
     capacidad: number;
     estado: string;
     imagen_url: string | null;
@@ -20,11 +20,13 @@ interface PageProps {
       roles?: string[];
     } | null;
   };
+  success?: string;
+  errors?: Record<string, string>;
   [key: string]: unknown;
 }
 
 const Rooms: React.FC = () => {
-  const { auth } = usePage<PageProps>().props;
+  const { auth, success, errors } = usePage<PageProps>().props;
   const [habitaciones, setHabitaciones] = useState<Habitacion[]>([]);
   const [fechaInicio, setFechaInicio] = useState<string>('');
   const [fechaFin, setFechaFin] = useState<string>('');
@@ -32,6 +34,16 @@ const Rooms: React.FC = () => {
     useEffect(() => {
         fetchHabitaciones();
     }, []);
+
+    // Mostrar mensajes de éxito o error
+    useEffect(() => {
+        if (success) {
+            alert('✅ ' + success);
+        }
+        if (errors?.message) {
+            alert('❌ ' + errors.message);
+        }
+    }, [success, errors]);
 
     const fetchHabitaciones = () => {
         fetch('/api/habitaciones')
@@ -55,36 +67,14 @@ const Rooms: React.FC = () => {
       return;
     }
 
-        const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '';
-
-    try {
-      const response = await fetch('/reservas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': csrfToken,
-        },
-        body: JSON.stringify({
-          user_id: auth.user.id, // ✅ Usar el ID del usuario autenticado
-          habitacion_id: habitacionId,
-          fecha_inicio: fechaInicio,
-          fecha_fin: fechaFin,
-        }),
-      });
-
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                alert('✅ Reserva realizada con éxito');
-                fetchHabitaciones();
-            } else {
-                alert('Solicitud Enviada: ' + (result.message || ''));
-            }
-        } catch (error) {
-            alert('❌ Error en la solicitud: ' + error);
-            console.error(error);
-        }
-    };
+    // Usar router.post de Inertia que maneja automáticamente CSRF
+    router.post('/reservas', {
+      user_id: auth.user.id,
+      habitacion_id: habitacionId,
+      fecha_inicio: fechaInicio,
+      fecha_fin: fechaFin,
+    });
+  };
 
     return (
         <section className="bg-gray-50 p-8">
@@ -125,7 +115,7 @@ const Rooms: React.FC = () => {
                             </h3>
                             <p className="text-sm text-gray-600">Capacidad: {hab.capacidad}</p>
                             <p className="mb-2 text-sm text-gray-600">Estado: {hab.estado}</p>
-                            <p>Precio: S/. {Number(hab.precio).toFixed(2)}</p>
+                            <p>Precio: S/. {Number(hab.precio_noche).toFixed(2)}</p>
 
                             <button
                                 className="mt-4 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
