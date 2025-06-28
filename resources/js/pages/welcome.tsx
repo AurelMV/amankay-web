@@ -8,9 +8,14 @@ import Footer from '@/components/Principal/Footer';
 
 interface PageProps {
   auth: {
-    user: any;
+    user: {
+      id: number;
+      name: string;
+      email: string;
+      roles?: string[];
+    } | null;
   };
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default function Welcome() {

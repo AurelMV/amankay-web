@@ -266,7 +266,7 @@ const HabitacionesManager: React.FC = () => {
                                 <label>Tipo de habitación</label>
                                 <select
                                     value={formData.tipo}
-                                    onChange={(e) => setFormData({ ...formData, tipo: e.target.value as any })}
+                                    onChange={(e) => setFormData({ ...formData, tipo: e.target.value as 'simple' | 'doble' | 'matrimonial' })}
                                     className="w-full rounded border p-2"
                                 >
                                     <option value="simple">Simple</option>
@@ -292,7 +292,7 @@ const HabitacionesManager: React.FC = () => {
                                 <label>Estado</label>
                                 <select
                                     value={formData.estado}
-                                    onChange={(e) => setFormData({ ...formData, estado: e.target.value as any })}
+                                    onChange={(e) => setFormData({ ...formData, estado: e.target.value as 'disponible' | 'ocupada' | 'mantenimiento' })}
                                     className="w-full rounded border p-2"
                                 >
                                     <option value="disponible">Disponible</option>
@@ -363,7 +363,7 @@ const HabitacionesManager: React.FC = () => {
                                         {editingId === habitacion.id ? (
                                             <select
                                                 value={formData.tipo}
-                                                onChange={(e) => setFormData({ ...formData, tipo: e.target.value as any })}
+                                                onChange={(e) => setFormData({ ...formData, tipo: e.target.value as 'simple' | 'doble' | 'matrimonial' })}
                                                 className="w-full rounded border p-1 text-sm"
                                             >
                                                 <option value="simple">Simple</option>
@@ -402,7 +402,7 @@ const HabitacionesManager: React.FC = () => {
                                         {editingId === habitacion.id ? (
                                             <select
                                                 value={formData.estado}
-                                                onChange={(e) => setFormData({ ...formData, estado: e.target.value as any })}
+                                                onChange={(e) => setFormData({ ...formData, estado: e.target.value as 'disponible' | 'ocupada' | 'mantenimiento' })}
                                                 className="w-full rounded border p-1 text-sm"
                                             >
                                                 <option value="disponible">Disponible</option>

@@ -12,7 +12,7 @@ interface PageProps {
   auth: {
     user: User | null;
   };
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const Header = () => {

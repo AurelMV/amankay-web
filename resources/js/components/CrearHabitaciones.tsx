@@ -13,7 +13,7 @@ interface FormData {
 interface ApiResponse {
   success: boolean;
   message?: string;
-  data?: any;
+  data?: Record<string, unknown>;
   errors?: Record<string, string[]>;
   error?: string;
 }
