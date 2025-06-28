@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reserva;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ReservaController extends Controller
 {
@@ -30,10 +31,22 @@ class ReservaController extends Controller
                 'message' => 'Reserva creada correctamente',
                 'reserva' => $reserva
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error al crear la reserva: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    public function index()
+    {
+        try {
+            $reservas = Reserva::with(['user', 'habitacion'])->get();
+            return  Inertia::render('admin/VisorPeticiones', [
+                'reservas' => $reservas,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al obtener las reservas: ' . $e->getMessage()
             ], 500);
         }
     }

@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('admin/dashboard', function () {
         return Inertia::render('admin/dashboard-admin');
     })->name('admin.dashboard');
+    Route::get('admin/reservas', [ReservaController::class, 'index'])->name('admin.reservas');
     Route::get('admin/usuarios', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
     Route::get('admin/habitaciones', [\App\Http\Controllers\HabitacionController::class, 'index'])->name('admin.habitaciones');
     Route::post('/habitaciones', [HabitacionController::class, 'store']);
