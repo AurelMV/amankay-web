@@ -27,14 +27,11 @@ class ReservaController extends Controller
                 'fecha_fin' => $request->fecha_fin,
             ]);
 
-            return response()->json([
-                'message' => 'Reserva creada correctamente',
-                'reserva' => $reserva
-            ], 201);
+            // Para Inertia, devolver una redirección con mensaje de éxito
+            return redirect()->back()->with('success', 'Reserva creada correctamente');
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al crear la reserva: ' . $e->getMessage()
-            ], 500);
+            // Para Inertia, devolver una redirección con mensaje de error
+            return redirect()->back()->withErrors(['message' => 'Error al crear la reserva: ' . $e->getMessage()]);
         }
     }
     public function index()
