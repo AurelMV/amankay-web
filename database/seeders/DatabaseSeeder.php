@@ -20,10 +20,20 @@ class DatabaseSeeder extends Seeder
         Role::firstorCreate(['name' => 'admin']);
         Role::firstorCreate(['name' => 'cliente']);
 
-        $user = User::factory()->create([
+        // Crear usuario admin
+        $admin = User::factory()->create([
+            'name' => 'Administrador',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
-        $user->assignRole('admin');
+        $admin->assignRole('admin');
+
+        // Crear usuario cliente
+        $cliente = User::factory()->create([
+            'name' => 'Cliente Test',
+            'email' => 'cliente@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+        $cliente->assignRole('cliente');
     }
 }

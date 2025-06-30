@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reserva;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ReservaController extends Controller
 {
@@ -26,14 +27,23 @@ class ReservaController extends Controller
                 'fecha_fin' => $request->fecha_fin,
             ]);
 
-            return response()->json([
-                'message' => 'Reserva creada correctamente',
-                'reserva' => $reserva
-            ], 201);
-
+            // Para Inertia, devolver una redirección con mensaje de éxito
+            return redirect()->back()->with('success', 'Reserva creada correctamente');
+        } catch (\Exception $e) {
+            // Para Inertia, devolver una redirección con mensaje de error
+            return redirect()->back()->withErrors(['message' => 'Error al crear la reserva: ' . $e->getMessage()]);
+        }
+    }
+    public function index()
+    {
+        try {
+            $reservas = Reserva::with(['user', 'habitacion'])->get();
+            return  Inertia::render('admin/VisorPeticiones', [
+                'reservas' => $reservas,
+            ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Error al crear la reserva: ' . $e->getMessage()
+                'error' => 'Error al obtener las reservas: ' . $e->getMessage()
             ], 500);
         }
     }
