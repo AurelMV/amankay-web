@@ -9,6 +9,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribut
 if (csrfToken) {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 }
+
 // Tipos TypeScript
 interface Habitacion {
     id: number;
@@ -49,13 +50,14 @@ const HabitacionesManager: React.FC = () => {
     // Cargar habitaciones al montar el componente
     useEffect(() => {
         fetchHabitaciones();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchHabitaciones = async () => {
         try {
             setLoading(true);
-            const response = await fetch('/habitaciones/catalogo');
-            const result = await response.json();
+            const response = await axios.get('/habitaciones/catalogo');
+            const result = response.data;
 
             if (result.success) {
                 setHabitaciones(result.data);
@@ -102,7 +104,8 @@ const HabitacionesManager: React.FC = () => {
                 formDataToSend.append('imagen', formData.imagen);
             }
 
-            const { data } = await axios.post(`/habitaciones/${editingId}`, formDataToSend);
+            const response = await axios.post(`/habitaciones/${editingId}`, formDataToSend);
+            const data = response.data;
 
             if (data.success) {
                 await fetchHabitaciones();
@@ -112,7 +115,7 @@ const HabitacionesManager: React.FC = () => {
             } else {
                 alert('Error al actualizar: ' + (data.error || 'Error desconocido'));
             }
-        } catch (error: any) {
+        } catch (error) {
             console.error('Error:', error);
             alert('Error de conexión');
         } finally {
@@ -121,11 +124,12 @@ const HabitacionesManager: React.FC = () => {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm('¿Estás seguro de eliminar esta habitación?')) return;
+        if (!window.confirm('¿Estás seguro de eliminar esta habitación?')) return;
 
         try {
             setLoading(true);
-            const { data } = await axios.delete(`/habitaciones/${id}`);
+            const response = await axios.delete(`/habitaciones/${id}`);
+            const data = response.data;
 
             if (data.success) {
                 await fetchHabitaciones();
@@ -133,13 +137,14 @@ const HabitacionesManager: React.FC = () => {
             } else {
                 alert('Error al eliminar: ' + (data.error || 'Error desconocido'));
             }
-        } catch (error: any) {
+        } catch (error) {
             console.error('Error:', error);
             alert('Error de conexión');
         } finally {
             setLoading(false);
         }
     };
+
     const handleCreate = async () => {
         try {
             setLoading(true);
@@ -156,7 +161,8 @@ const HabitacionesManager: React.FC = () => {
                 formDataToSend.append('imagen', formData.imagen);
             }
 
-            const { data } = await axios.post('/habitaciones', formDataToSend);
+            const response = await axios.post('/habitaciones', formDataToSend);
+            const data = response.data;
 
             if (data.success) {
                 await fetchHabitaciones();
@@ -166,7 +172,7 @@ const HabitacionesManager: React.FC = () => {
             } else {
                 alert('Error al crear: ' + (data.error || 'Error desconocido'));
             }
-        } catch (error: any) {
+        } catch (error) {
             console.error('Error:', error);
             alert('Error de conexión');
         } finally {
@@ -212,6 +218,7 @@ const HabitacionesManager: React.FC = () => {
             </div>
         );
     }
+
     const breadcrumbs = [
         {
             title: 'Habitaciones',
