@@ -50,7 +50,7 @@ const HabitacionesManager: React.FC = () => {
     // Cargar habitaciones al montar el componente
     useEffect(() => {
         fetchHabitaciones();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+         
     }, []);
 
     const fetchHabitaciones = async () => {

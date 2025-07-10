@@ -17,6 +17,11 @@ class ReservaController extends Controller
                 'habitacion_id' => 'required|exists:habitacions,id',
                 'fecha_inicio' => 'required|date',
                 'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+                // Validar también los datos del detalle
+                'nombres_personas' => 'required|string',
+                'metodo_pago' => 'required|in:efectivo,tarjeta',
+                'telefono' => 'nullable|string',
+                'documento' => 'nullable|string',
             ]);
 
             // Crear reserva
@@ -27,24 +32,20 @@ class ReservaController extends Controller
                 'fecha_fin' => $request->fecha_fin,
             ]);
 
-            // Para Inertia, devolver una redirección con mensaje de éxito
-            return redirect()->back()->with('success', 'Reserva creada correctamente');
-        } catch (\Exception $e) {
-            // Para Inertia, devolver una redirección con mensaje de error
-            return redirect()->back()->withErrors(['message' => 'Error al crear la reserva: ' . $e->getMessage()]);
-        }
-    }
-    public function index()
-    {
-        try {
-            $reservas = Reserva::with(['user', 'habitacion'])->get();
-            return  Inertia::render('admin/VisorPeticiones', [
-                'reservas' => $reservas,
+            // Crear detalle de reserva
+            \App\Models\DetalleReserva::create([
+                'reserva_id' => $reserva->id,
+                'user_id' => $request->user_id,
+                'nombres_personas' => $request->nombres_personas,
+                'metodo_pago' => $request->metodo_pago,
+                'telefono' => $request->telefono,
+                'documento' => $request->documento,
             ]);
+
+            // Redirige con mensaje de éxito usando Inertia
+            return redirect()->back()->with('success', '¡Reserva creada correctamente!');
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al obtener las reservas: ' . $e->getMessage()
-            ], 500);
+            return redirect()->back()->with('error', 'Error al crear la reserva: ' . $e->getMessage());
         }
     }
 }
