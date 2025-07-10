@@ -47,7 +47,6 @@ const Rooms: React.FC = () => {
   const [metodoPago, setMetodoPago] = useState('efectivo');
   const [telefono, setTelefono] = useState('');
   const [documento, setDocumento] = useState('');
-  const [numeroTarjeta, setNumeroTarjeta] = useState('');
   const [mensajeExito, setMensajeExito] = useState('');
 
   useEffect(() => {
