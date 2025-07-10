@@ -19,4 +19,4 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ${{ secrets.SCRIPT_PATH }}
+            /var/www/deploy-amankay.sh
