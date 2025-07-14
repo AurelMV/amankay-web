@@ -31,7 +31,7 @@ const Header = () => {
                 </h1>
                 <nav className="flex items-center space-x-2 md:space-x-6">
                     {[
-                        { href: '#hero', label: 'Home' },
+                        { href: '#hero', label: 'Home1' },
                         { href: '#rooms', label: 'Habitaciones' },
                         { href: '#services', label: 'Servicios' },
                         { href: '#gallery', label: 'Galería' },
