@@ -27,7 +27,7 @@ const Header = () => {
         <header className="fixed z-20 w-full bg-white/80 shadow-md backdrop-blur transition">
             <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
                 <h1 className="text-2xl font-extrabold tracking-tight text-blue-900 drop-shadow-sm">
-                    <span className="text-green-400">Amankay</span> Inn
+                    <span className="text-yellow-400">Amankay</span> Inn
                 </h1>
                 <nav className="flex items-center space-x-2 md:space-x-6">
                     {[
