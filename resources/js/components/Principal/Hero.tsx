@@ -8,10 +8,10 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
       <div className="relative z-10 text-center px-6">
         <h2 className="text-5xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg animate-fade-in">
-          welcome<span className="text-red-400"> cusco imperial</span>
+          Bienvenido a <span className="text-yellow-400">Amankay Inn</span>
         </h2>
         <p className="text-2xl md:text-3xl text-gray-200 mb-8 animate-fade-in delay-200">
-          Tu descanso perfecto en <span className="font-semibold text-yellow-300">Cusco</span>
+          Tu descanso perfecto en <span className="font-semibold text-yellow-300">Cusco Imperial</span>
         </p>
         <a
           href="#rooms"
